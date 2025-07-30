@@ -125,33 +125,30 @@ dotnet run --project CasaTerra.Portal.API
 
 ## 🚀 Deploy e Publicação
 
-### Deploy Rápido (Netlify)
+### 🖥️ Deploy Windows Server IIS (Recomendado)
 
-1. **Build do projeto**:
+1. **Build para Windows**:
    ```bash
-   npm run build
+   # Execute o script automatizado
+   scripts\build-for-windows.bat
    ```
 
-2. **Deploy automático**:
-   - Conecte seu repositório GitHub ao Netlify
-   - Configure: Build command: `npm run build`, Publish directory: `dist`
-   - Deploy automático a cada push na branch main
+2. **Copie a pasta `dist` para o servidor Windows**
 
-3. **Deploy manual**:
+3. **Execute no servidor como Administrador**:
    ```bash
-   # Via Netlify CLI
-   npm install -g netlify-cli
-   netlify login
-   netlify deploy --prod --dir=dist
+   # Na pasta copiada, execute:
+   instalar-no-servidor.bat
    ```
 
-### Outros Métodos de Deploy
+📖 **[Guia Completo Windows IIS](docs/WINDOWS-IIS-DEPLOY.md)**
+🔧 **[Solução de Problemas](docs/TROUBLESHOOTING-WINDOWS.md)**
 
+### 🌐 Deploy Netlify (Alternativo)
+
+- **Build**: `npm run build`
+- **Deploy**: Conecte repositório GitHub ao Netlify
 - **Vercel**: `vercel --prod`
-- **GitHub Pages**: Configure GitHub Actions
-- **Docker**: `docker-compose up -d`
-
-📖 **[Guia Completo de Deploy](DEPLOYMENT.md)**
 
 ## 🔐 Configuração Active Directory
 

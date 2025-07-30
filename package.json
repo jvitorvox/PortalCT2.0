@@ -22,10 +22,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:windows": "scripts\\build-for-windows.bat",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "echo \"Testes serão implementados\" && exit 0",
-    "test:coverage": "echo \"Coverage será implementado\" && exit 0"
+    "test:coverage": "echo \"Coverage será implementado\" && exit 0",
+    "deploy:windows": "powershell -ExecutionPolicy Bypass -File scripts\\update-iis-site.ps1"
   },
   "dependencies": {
     "lucide-react": "^0.344.0",
