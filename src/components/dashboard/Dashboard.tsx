@@ -1,21 +1,49 @@
 import React from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import { Building2, Users, FileText, BarChart3 } from 'lucide-react';
+import { Building2, Users, FileText, BarChart3, LogOut } from 'lucide-react';
+import { DepartmentGrid } from './DepartmentGrid';
 
 export function Dashboard() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Portal Casa & Terra
-          </h1>
-          <p className="text-gray-600">
-            Bem-vindo, {user?.name}! Acesse os sistemas do seu departamento.
-          </p>
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              Portal Casa & Terra
+            </h1>
+            <p className="text-gray-600">
+              Bem-vindo, {user?.name}! Acesse os sistemas do seu departamento.
+            </p>
+          </div>
+          
+          <div className="flex items-center space-x-4">
+            {user?.avatar && (
+              <img
+                src={user.avatar}
+                alt={user.name}
+                className="w-10 h-10 rounded-full object-cover"
+              />
+            )}
+            <div className="text-right">
+              <p className="text-sm font-medium text-gray-900">{user?.name}</p>
+              <p className="text-xs text-gray-500">{user?.department}</p>
+            </div>
+            <button
+              onClick={handleLogout}
+              className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+              title="Sair"
+            >
+              <LogOut className="h-5 w-5" />
+            </button>
+          </div>
         </div>
 
         {/* Stats Cards */}
@@ -62,27 +90,7 @@ export function Dashboard() {
         </div>
 
         {/* Main Content */}
-        <div className="bg-white rounded-lg shadow-sm border p-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">
-            Seus Departamentos
-          </h2>
-          <p className="text-gray-600 mb-6">
-            Você tem acesso aos seguintes departamentos baseado em suas permissões:
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {user?.permissions.map((permission, index) => (
-              <div key={index} className="p-4 border rounded-lg hover:bg-gray-50 transition-colors">
-                <div className="flex items-center">
-                  <Building2 className="h-5 w-5 text-blue-600 mr-3" />
-                  <span className="font-medium text-gray-900 capitalize">
-                    {permission.replace('_', ' ')}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <DepartmentGrid />
       </div>
     </div>
   );

@@ -20,52 +20,50 @@ Sistema corporativo moderno e centralizado para acesso a aplicações internas e
 - 🎨 **UI/UX Moderna** - Design clean e intuitivo
 - 🔒 **Controle de Permissões** - Acesso baseado em grupos AD
 
+## 🖥️ Deploy Windows Server IIS (Recomendado)
+
+### 🚀 Processo Super Simples
+
+#### 1. **No seu computador de desenvolvimento:**
+```bash
+# Execute o script automatizado
+scripts\build-for-windows.bat
+```
+
+#### 2. **Copie a pasta `dist` para o servidor Windows**
+- Local recomendado: `C:\inetpub\wwwroot\casa-terra-portal\`
+
+#### 3. **No servidor, execute como Administrador:**
+```bash
+# Na pasta copiada, execute:
+instalar-no-servidor.bat
+```
+
+### 📖 Documentação Completa
+- **[Guia Windows IIS](docs/WINDOWS-IIS-DEPLOY.md)** - Instruções detalhadas
+- **[Solução de Problemas](docs/TROUBLESHOOTING-WINDOWS.md)** - Troubleshooting
+- **[Guia de Setup](docs/SETUP.md)** - Configuração de desenvolvimento
+
 ## 🏗️ Arquitetura do Projeto
 
 ```
 casa-terra-portal/
-├── frontend/                    # React + TypeScript
-│   ├── src/
-│   │   ├── components/         # Componentes React
-│   │   │   ├── auth/          # Autenticação
-│   │   │   ├── dashboard/     # Dashboard principal
-│   │   │   ├── layout/        # Layout e navegação
-│   │   │   ├── ui/           # Design System
-│   │   │   └── icons/        # Gerenciamento de ícones
-│   │   ├── contexts/          # Context API
-│   │   ├── data/             # Dados estáticos
-│   │   ├── types/            # TypeScript interfaces
-│   │   └── App.tsx           # Componente raiz
-│   ├── public/               # Assets estáticos
-│   └── package.json          # Dependências frontend
-│
-├── backend/                     # .NET Core API
-│   ├── CasaTerra.Portal.API/           # Web API Layer
-│   │   ├── Controllers/               # API Controllers
-│   │   ├── Middleware/               # Custom middleware
-│   │   ├── Configuration/            # Startup configs
-│   │   └── Program.cs               # Entry point
-│   │
-│   ├── CasaTerra.Portal.Core/          # Domain Layer
-│   │   ├── Entities/                 # Domain entities
-│   │   ├── Interfaces/               # Repository interfaces
-│   │   ├── Services/                 # Business logic
-│   │   └── DTOs/                    # Data Transfer Objects
-│   │
-│   ├── CasaTerra.Portal.Infrastructure/ # Infrastructure Layer
-│   │   ├── Data/                     # Entity Framework
-│   │   ├── Repositories/             # Data access
-│   │   ├── Services/                 # External services
-│   │   └── ActiveDirectory/          # AD integration
-│   │
-│   └── CasaTerra.Portal.Tests/         # Unit Tests
-│       ├── Controllers/              # Controller tests
-│       ├── Services/                 # Service tests
-│       └── Integration/              # Integration tests
-│
-├── docs/                       # Documentação
-├── scripts/                    # Scripts de deploy
-└── docker-compose.yml          # Containerização
+├── src/                        # Frontend React + TypeScript
+│   ├── components/             # Componentes React
+│   │   ├── auth/              # Autenticação
+│   │   ├── dashboard/         # Dashboard principal
+│   │   ├── layout/            # Layout e navegação
+│   │   └── ui/               # Design System
+│   ├── contexts/              # Context API
+│   ├── types/                 # TypeScript interfaces
+│   └── App.tsx               # Componente raiz
+├── backend/                    # .NET Core API (estrutura preparada)
+│   ├── CasaTerra.Portal.API/          # Web API Layer
+│   ├── CasaTerra.Portal.Core/         # Domain Layer
+│   └── CasaTerra.Portal.Infrastructure/ # Infrastructure Layer
+├── docs/                       # Documentação completa
+├── scripts/                    # Scripts de deploy Windows
+└── docker-compose.yml          # Containerização (opcional)
 ```
 
 ## 🚀 Tecnologias Utilizadas
@@ -87,12 +85,6 @@ casa-terra-portal/
 - **Serilog** - Logging estruturado
 - **Swagger/OpenAPI** - Documentação da API
 
-### DevOps & Infraestrutura
-- **Docker** - Containerização
-- **SQL Server** - Banco de dados
-- **IIS** - Servidor web (produção)
-- **Git** - Controle de versão
-
 ## 📦 Instalação e Execução
 
 ### Pré-requisitos
@@ -100,7 +92,7 @@ casa-terra-portal/
 - npm ou yarn
 - Git
 
-### Frontend (React)
+### Desenvolvimento Local
 ```bash
 # Clone o repositório
 git clone https://github.com/sua-empresa/casa-terra-portal.git
@@ -115,49 +107,49 @@ npm run dev
 
 O aplicativo estará disponível em `http://localhost:5173`
 
-### Backend (.NET Core) - Estrutura Preparada
+## 🌐 URLs de Acesso
+
+- **🌐 Produção**: https://shiny-profiterole-e00140.netlify.app
+- **💻 Desenvolvimento**: http://localhost:5173
+- **🔧 API Backend**: http://localhost:5000 (quando implementado)
+- **📚 Swagger UI**: http://localhost:5000/swagger (quando implementado)
+
+## 👥 Departamentos Configurados
+
+1. **RH** (Recursos Humanos)
+2. **Jurídico**
+3. **Financeiro**
+4. **Cobrança**
+5. **Administrativo**
+6. **Assessoria Societária**
+7. **Central de Soluções**
+8. **Comercial**
+9. **Contábil**
+10. **Corretores**
+11. **Controle de Vendas**
+12. **Diretoria**
+13. **DM** (Desenvolvimento de Mercado)
+14. **Engenharia**
+15. **Escritório**
+16. **Gestão de Contratos**
+17. **Suprimentos**
+18. **Obras**
+19. **Projetos**
+20. **Regionais**
+21. **Retenção e Quitação**
+
+## 📄 Scripts Disponíveis
+
 ```bash
-cd backend
-dotnet restore
-dotnet build
-dotnet run --project CasaTerra.Portal.API
+npm run dev                    # Servidor de desenvolvimento
+npm run build                 # Build para produção
+npm run build:windows         # Build otimizado para Windows IIS
+npm run preview               # Preview do build
+npm run lint                  # Verificar código
+npm run deploy:windows        # Deploy automático no Windows IIS
 ```
 
-## 🚀 Deploy e Publicação
-
-### 🖥️ Deploy Windows Server IIS (Recomendado)
-
-1. **Build para Windows**:
-   ```bash
-   # Execute o script automatizado
-   scripts\build-for-windows.bat
-   ```
-
-2. **Copie a pasta `dist` para o servidor Windows**
-
-3. **Execute no servidor como Administrador**:
-   ```bash
-   # Na pasta copiada, execute:
-   instalar-no-servidor.bat
-   ```
-
-📖 **[Guia Completo Windows IIS](docs/WINDOWS-IIS-DEPLOY.md)**
-🔧 **[Solução de Problemas](docs/TROUBLESHOOTING-WINDOWS.md)**
-
-### 🌐 Deploy Netlify (Alternativo)
-
-- **Build**: `npm run build`
-- **Deploy**: Conecte repositório GitHub ao Netlify
-- **Vercel**: `vercel --prod`
-
-## 🔐 Configuração Active Directory
-
-O sistema está preparado para integração com Active Directory através de:
-- Autenticação LDAP
-- Grupos de segurança para permissões
-- Single Sign-On (SSO)
-
-## 📊 Funcionalidades Implementadas
+## 🧪 Funcionalidades Implementadas
 
 ### ✅ Frontend Completo
 - [x] Sistema de autenticação completo
@@ -178,67 +170,13 @@ O sistema está preparado para integração com Active Directory através de:
 - [ ] Logging e monitoramento
 - [ ] Testes unitários e integração
 
-## 📁 Estrutura do Projeto
+## 🔧 Configuração de Ambiente
 
-```
-casa-terra-portal/
-├── src/
-│   ├── components/          # Componentes React
-│   │   ├── auth/           # Autenticação
-│   │   ├── dashboard/      # Dashboard principal
-│   │   └── layout/         # Layout e navegação
-│   ├── contexts/           # Context API (Estado global)
-│   ├── types/              # Definições TypeScript
-│   └── App.tsx             # Componente raiz
-├── public/                 # Assets estáticos
-├── backend/                # API .NET Core (estrutura)
-├── docs/                   # Documentação
-├── scripts/                # Scripts de deploy
-└── docker-compose.yml      # Containerização
-```
-
-## 🌐 URLs de Acesso
-
-- **🌐 Produção**: https://shiny-profiterole-e00140.netlify.app
-- **💻 Desenvolvimento**: http://localhost:5173
-- **🔧 API Backend**: http://localhost:5000 (quando implementado)
-- **📚 Swagger UI**: http://localhost:5000/swagger (quando implementado)
-
-## 👥 Departamentos Configurados
-
-1. RH (Recursos Humanos)
-2. Jurídico
-3. Financeiro
-4. Cobrança
-5. Administrativo
-6. Assessoria Societária
-7. Central de Soluções
-8. Comercial
-9. Contábil
-10. Corretores
-11. Controle de Vendas
-12. Diretoria
-13. DM (Desenvolvimento de Mercado)
-14. Engenharia
-15. Escritório
-16. Gestão de Contratos
-17. Suprimentos
-18. Obras
-19. Projetos
-20. Regionais
-21. Retenção e Quitação
-
-## 🧪 Testes
-
-```bash
-# Executar testes (quando implementados)
-npm run test
-
-# Coverage
-npm run test:coverage
-
-# Linting
-npm run lint
+### Variáveis de Ambiente (.env)
+```env
+VITE_API_URL=http://localhost:5000/api
+VITE_APP_NAME=Portal Casa & Terra
+VITE_ENVIRONMENT=development
 ```
 
 ## 🤝 Contribuição
@@ -251,48 +189,22 @@ npm run lint
 
 📖 **[Guia de Contribuição](CONTRIBUTING.md)**
 
-## 📄 Scripts Disponíveis
-
-```bash
-npm run dev          # Servidor de desenvolvimento
-npm run build        # Build para produção
-npm run preview      # Preview do build
-npm run lint         # Verificar código
-```
-
-## 🔧 Configuração de Ambiente
-
-### Variáveis de Ambiente (.env)
-```env
-VITE_API_URL=http://localhost:5000/api
-VITE_APP_NAME=Portal Casa & Terra
-VITE_ENVIRONMENT=development
-```
-
-## 🐳 Docker
-
-```bash
-# Desenvolvimento
-docker-compose up -d
-
-# Produção
-docker-compose -f docker-compose.prod.yml up -d
-```
-
 ## 📝 Próximos Passos
 
-1. Implementar backend .NET Core
-2. Configurar integração com Active Directory
-3. Desenvolver APIs RESTful
-4. Implementar testes automatizados
-5. Configurar CI/CD pipeline
-6. Deploy em ambiente de produção
+1. ✅ Frontend React completo
+2. ✅ Deploy em Windows IIS
+3. ✅ Documentação completa
+4. [ ] Implementar backend .NET Core
+5. [ ] Configurar integração com Active Directory
+6. [ ] Desenvolver APIs RESTful
+7. [ ] Implementar testes automatizados
+8. [ ] Configurar CI/CD pipeline
 
 ## 📞 Suporte e Contato
 
 - **📧 Email**: dev@casaterra.com
 - **💬 Issues**: [GitHub Issues](https://github.com/sua-empresa/casa-terra-portal/issues)
-- **📖 Documentação**: [Wiki do Projeto](https://github.com/sua-empresa/casa-terra-portal/wiki)
+- **📖 Documentação**: Pasta `docs/` do projeto
 
 ## 📄 Licença
 
