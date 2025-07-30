@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  # Frontend React
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000/api
+    depends_on:
+      - backend
+    networks:
+      - casa-terra-network
+
+  # Backend .NET Core API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=CasaTerraPortal;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=true
+    depends_on:
+      - sqlserver
+    networks:
+      - casa-terra-network
+
+  # SQL Server Database
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Passw0rd
+      - MSSQL_PID=Express
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - casa-terra-network
+
+  # Redis Cache (opcional)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - casa-terra-network
+
+volumes:
+  sqlserver_data:
+  redis_data:
+
+networks:
+  casa-terra-network:
+    driver: bridge
