@@ -95,7 +95,7 @@
         .sidebar {
             position: fixed;
             top: 70px;
-            left: -280px;
+            left: 0;
             width: 280px;
             height: calc(100vh - 70px);
             background: linear-gradient(180deg, #004F71 0%, #003a54 100%);
@@ -104,8 +104,8 @@
             box-shadow: 2px 0 10px rgba(0,0,0,0.1);
         }
 
-        .sidebar.active {
-            left: 0;
+        .sidebar.hidden {
+            left: -280px;
         }
 
         .sidebar-menu {
@@ -161,15 +161,15 @@
 
         /* Main Content */
         .main-content {
-            margin-left: 0;
+            margin-left: 280px;
             margin-top: 70px;
             padding: 30px;
             transition: margin-left 0.3s ease;
             min-height: calc(100vh - 70px);
         }
 
-        .main-content.shifted {
-            margin-left: 280px;
+        .main-content.full-width {
+            margin-left: 0;
         }
 
         /* Cards Container */
@@ -285,16 +285,27 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s;
+            display: none;
         }
 
         .overlay.active {
             opacity: 1;
             visibility: visible;
+            display: block;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
+            .sidebar {
+                left: -280px;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
             .main-content {
+                margin-left: 0;
                 padding: 20px 15px;
             }
 
@@ -483,7 +494,7 @@
     </form>
 
     <script>
-        let sidebarOpen = false;
+        let sidebarOpen = window.innerWidth > 768;
 
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -493,10 +504,12 @@
             sidebarOpen = !sidebarOpen;
 
             if (sidebarOpen) {
-                sidebar.classList.add('active');
-                overlay.classList.add('active');
+                sidebar.classList.remove('hidden');
                 if (window.innerWidth > 768) {
-                    mainContent.classList.add('shifted');
+                    mainContent.classList.remove('full-width');
+                } else {
+                    sidebar.classList.add('active');
+                    overlay.classList.add('active');
                 }
             } else {
                 closeSidebar();
@@ -508,9 +521,13 @@
             const overlay = document.getElementById('overlay');
             const mainContent = document.getElementById('mainContent');
 
-            sidebar.classList.remove('active');
+            if (window.innerWidth > 768) {
+                sidebar.classList.add('hidden');
+                mainContent.classList.add('full-width');
+            } else {
+                sidebar.classList.remove('active');
+            }
             overlay.classList.remove('active');
-            mainContent.classList.remove('shifted');
             sidebarOpen = false;
         }
 
@@ -552,10 +569,37 @@
 
         // Handle window resize
         window.addEventListener('resize', function() {
-            if (window.innerWidth > 768 && sidebarOpen) {
-                document.getElementById('mainContent').classList.add('shifted');
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            const overlay = document.getElementById('overlay');
+            
+            if (window.innerWidth > 768) {
+                // Desktop: mostrar sidebar por padrão
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+                if (sidebarOpen) {
+                    sidebar.classList.remove('hidden');
+                    mainContent.classList.remove('full-width');
+                } else {
+                    sidebar.classList.add('hidden');
+                    mainContent.classList.add('full-width');
+                }
             } else {
-                document.getElementById('mainContent').classList.remove('shifted');
+                // Mobile: esconder sidebar por padrão
+                sidebar.classList.remove('hidden');
+                mainContent.classList.remove('full-width');
+                if (!sidebarOpen) {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                }
+            }
+        });
+        
+        // Inicializar estado do sidebar
+        window.addEventListener('load', function() {
+            if (window.innerWidth <= 768) {
+                sidebarOpen = false;
+                closeSidebar();
             }
         });
     </script>
