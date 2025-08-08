@@ -99,13 +99,14 @@
             width: 280px;
             height: calc(100vh - 70px);
             background: linear-gradient(180deg, #004F71 0%, #003a54 100%);
-            transition: left 0.3s ease;
+            transition: transform 0.3s ease;
             z-index: 999;
             box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            transform: translateX(0);
         }
 
         .sidebar.hidden {
-            left: -280px;
+            transform: translateX(-100%);
         }
 
         .sidebar-menu {
@@ -297,11 +298,11 @@
         /* Responsive */
         @media (max-width: 768px) {
             .sidebar {
-                left: -280px;
+                transform: translateX(-100%);
             }
             
             .sidebar.active {
-                left: 0;
+                transform: translateX(0);
             }
             
             .main-content {
@@ -494,7 +495,7 @@
     </form>
 
     <script>
-        let sidebarOpen = window.innerWidth > 768;
+        let sidebarOpen = true;
 
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -597,7 +598,15 @@
         
         // Inicializar estado do sidebar
         window.addEventListener('load', function() {
-            if (window.innerWidth <= 768) {
+            if (window.innerWidth > 768) {
+                // Desktop: mostrar sidebar por padrão
+                const sidebar = document.getElementById('sidebar');
+                const mainContent = document.getElementById('mainContent');
+                sidebar.classList.remove('hidden');
+                mainContent.classList.remove('full-width');
+                sidebarOpen = true;
+            } else {
+                // Mobile: esconder sidebar por padrão
                 sidebarOpen = false;
                 closeSidebar();
             }
